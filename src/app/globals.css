@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
+/* Notion-style design tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ffffff;
+  --bg-soft: #f7f7f5;
+  --text: #37352f;
+  --text-2: rgba(55, 53, 47, 0.65);
+  --text-3: rgba(55, 53, 47, 0.45);
+  --line: rgba(55, 53, 47, 0.09);
+  --hover: rgba(55, 53, 47, 0.06);
+  --accent: #2383e2;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-soft: var(--bg-soft);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-ink-3: var(--text-3);
+  --color-line: var(--line);
+  --color-hover: var(--hover);
+  --color-accent: var(--accent);
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* Notion tag colors */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: 4px; font-size: 13px; line-height: 20px; white-space: nowrap; }
+.tag-gray   { background: #f1f1ef; color: #787774; }
+.tag-brown  { background: #f4eeee; color: #9f6b53; }
+.tag-orange { background: #fbecdd; color: #d9730d; }
+.tag-yellow { background: #fbf3db; color: #cb912f; }
+.tag-green  { background: #edf3ec; color: #448361; }
+.tag-blue   { background: #e7f3f8; color: #337ea9; }
+.tag-purple { background: #f6f3f9; color: #9065b0; }
+.tag-pink   { background: #faf1f5; color: #c14c8a; }
+.tag-red    { background: #fdebec; color: #d44c47; }
+
+.bar-gray   { background: #d3d3d0; } .bar-brown  { background: #c9a89a; }
+.bar-orange { background: #f0a868; } .bar-yellow { background: #e9c46a; }
+.bar-green  { background: #8fbf9f; } .bar-blue   { background: #7fb4d6; }
+.bar-purple { background: #b89ad3; } .bar-pink   { background: #e29bc0; }
+.bar-red    { background: #e88b88; }
+
+.tabular { font-variant-numeric: tabular-nums; }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
