@@ -7,13 +7,14 @@ const HOSTS: Record<string, string> = {
 
 /** Minimal Plaid REST client (keys never leave the server). */
 export async function plaid<T = Record<string, unknown>>(path: string, body: Record<string, unknown>): Promise<T> {
-  const host = HOSTS[process.env.PLAID_ENV ?? "sandbox"] ?? HOSTS.sandbox;
+  const env = (process.env.PLAID_ENV ?? "sandbox").trim().toLowerCase();
+  const host = HOSTS[env] ?? HOSTS.sandbox;
   const res = await fetch(host + path, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      client_id: process.env.PLAID_CLIENT_ID,
-      secret: process.env.PLAID_SECRET,
+      client_id: process.env.PLAID_CLIENT_ID?.trim(),
+      secret: process.env.PLAID_SECRET?.trim(),
       ...body,
     }),
     cache: "no-store",
