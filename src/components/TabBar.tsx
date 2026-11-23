@@ -7,6 +7,7 @@ const TABS = [
   { href: "/", label: "Review", icon: "📥" },
   { href: "/month", label: "Month", icon: "🗓️" },
   { href: "/year", label: "Year", icon: "📊" },
+  { href: "/settings", label: "Settings", icon: "⚙️" },
 ];
 
 export function TabBar() {

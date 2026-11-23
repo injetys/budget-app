@@ -6,7 +6,7 @@ import { CategoryPicker } from "@/components/CategoryPicker";
 import { PageTitle } from "@/components/Tag";
 
 export default function ReviewPage() {
-  const { txns, accounts, accept, recategorize, undo, reset } = useStore();
+  const { mode, txns, accounts, accept, recategorize, undo, reset } = useStore();
   const [picking, setPicking] = useState<string | null>(null);
   const queue = txns
     .filter((t) => !t.reviewed)
@@ -34,6 +34,9 @@ export default function ReviewPage() {
           <div className="flex h-full flex-col items-center justify-center rounded-xl border border-dashed border-line text-ink-3">
             <div className="text-[40px]">🎉</div>
             <div className="mt-2 text-[15px]">Inbox zero</div>
+            {mode === "live" && accounts.length === 0 && (
+              <a href="/settings" className="mt-4 rounded-md bg-accent px-3 py-2 text-[14px] font-medium text-white">Connect your first bank →</a>
+            )}
           </div>
         )}
       </div>
@@ -49,7 +52,7 @@ export default function ReviewPage() {
 
       <div className="mx-auto mt-8 flex max-w-[400px] justify-between text-[13px] text-ink-3">
         <button onClick={undo} className="rounded px-2 py-1 active:bg-hover">↶ Undo</button>
-        <button onClick={reset} className="rounded px-2 py-1 active:bg-hover">Reset demo data</button>
+        {mode === "demo" ? <button onClick={reset} className="rounded px-2 py-1 active:bg-hover">Reset demo data</button> : <span />}
       </div>
 
       {pickTxn && (

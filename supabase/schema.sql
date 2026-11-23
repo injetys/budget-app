@@ -64,3 +64,10 @@ create policy "own" on plaid_items  for all using (user_id = auth.uid()) with ch
 create policy "own" on accounts     for all using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own" on rules        for all using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "own" on transactions for all using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- Explicit API permissions: signed-in users can use their own rows (RLS above),
+-- nobody but the server can touch Plaid access tokens.
+grant select, insert, update, delete on plaid_items, accounts, rules, transactions to authenticated;
+revoke all on plaid_secrets from anon, authenticated;
+revoke all on plaid_items, accounts, rules, transactions from anon;
+grant all on plaid_items, plaid_secrets, accounts, rules, transactions to service_role;
