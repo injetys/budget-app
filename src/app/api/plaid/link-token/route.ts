@@ -4,6 +4,10 @@ import { plaid } from "@/lib/plaid";
 export async function POST() {
   const user = await currentUser();
   if (!user) return Response.json({ error: "Not signed in" }, { status: 401 });
+  const allowed = (process.env.ALLOWED_EMAILS ?? "").toLowerCase().split(",").map((s) => s.trim()).filter(Boolean);
+  if (allowed.length && !allowed.includes((user.email ?? "").toLowerCase())) {
+    return Response.json({ error: "This account isn't allowed to connect banks yet. Ask Steven to add your email." }, { status: 403 });
+  }
   try {
     const r = await plaid<{ link_token: string }>("/link/token/create", {
       user: { client_user_id: user.id },
